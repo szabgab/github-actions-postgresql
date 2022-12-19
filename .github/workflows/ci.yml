@@ -37,7 +37,8 @@ jobs:
 
       - name: ping postgres
         run: |
-          ping -c 4 postgres
+          #ping -c 4 postgres
+          ping -c 4 code-maven.com
 
       - name: PostgreSQL CLI psql
         env:
