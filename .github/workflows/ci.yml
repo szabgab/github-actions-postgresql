@@ -7,11 +7,6 @@ on:
   schedule:
     - cron: '42 5 * * *'
 
-env:
-   POSTGRES_USER: username
-   POSTGRES_PASSWORD: password
-   POSTGRES_DB: mydb
-
 jobs:
   test:
     strategy:
@@ -21,6 +16,15 @@ jobs:
     services:
       postgres:
         image: postgres:${{matrix.postgres}}
+        env:
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: mydb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     runs-on: ubuntu-latest
     container: ubuntu:22.10
@@ -35,14 +39,13 @@ jobs:
           apt-get install -y iputils-ping
           apt-get install -y postgresql-client
 
-      #- name: ping postgres
-      #  run: |
-      #    #ping -c 4 postgres
-      #    ping -c 4 code-maven.com
+      - name: ping postgres
+        run: |
+          ping -c 4 postgres
 
       - name: PostgreSQL CLI psql
         env:
-          PGPASSWORD: password
+          PGPASSWORD: secret
         run: |
           set -x
           echo "SELECT CURRENT_TIME" | psql -h postgres -U username mydb
