@@ -35,10 +35,10 @@ jobs:
           apt-get install -y iputils-ping
           apt-get install -y postgresql-client
 
-      - name: ping postgres
-        run: |
-          #ping -c 4 postgres
-          ping -c 4 code-maven.com
+      #- name: ping postgres
+      #  run: |
+      #    #ping -c 4 postgres
+      #    ping -c 4 code-maven.com
 
       - name: PostgreSQL CLI psql
         env:
