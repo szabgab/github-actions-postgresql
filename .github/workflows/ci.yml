@@ -49,5 +49,5 @@ jobs:
         run: |
           set -x
           echo "SELECT CURRENT_TIME" | psql -h postgres -U username mydb
-
+          echo "SELECT version()" | psql -h postgres -U username mydb
 
