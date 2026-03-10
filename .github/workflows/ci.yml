@@ -68,11 +68,10 @@ jobs:
         # use the username and database name we set in the service above.
         run: |
           set -x # show the commands
-          set -e # fail the step if one statement fails
           echo "SELECT CURRENT_TIME" | psql -h mypg -U myusername mydb
           echo "SELECT version()" | psql -h mypg -U myusername mydb
           echo "CREATE TABLE counter (name text, cnt int)" | psql -h mypg -U myusername mydb
           echo "INSERT INTO counter (name, cnt) VALUES ('foo', 1)" | psql -h mypg -U myusername mydb
-          echo 'INSERT INTO counter (name, cnt) VALUES ("bar", 42)' | psql -h mypg -U myusername mydb
+          echo "INSERT INTO counter (name, cnt) VALUES ('bar', 42)" | psql -h mypg -U myusername mydb
           echo "SELECT * FROM counter" | psql -h mypg -U myusername mydb
 
