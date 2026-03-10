@@ -8,8 +8,6 @@ on:
 #  schedule:
 #    - cron: '42 5 * * *'
 
-env:
-  POSTGRES_DB: mydb
 
 jobs:
   test:
@@ -31,10 +29,11 @@ jobs:
       mypg:
         image: postgres:${{matrix.postgres}}
         env:
-          # We defined some environment variables needed by the the server
-          # They are also used in the client software
+          # We defined some environment variables needed by the the server.
+          # They are also used in the client part of this job later in this file.
           POSTGRES_USER: myusername
           POSTGRES_PASSWORD: secret
+          POSTGRES_DB: mydb
        # Some magic options needed for the Postgres in the Docker container
         options: >-
           --health-cmd pg_isready
@@ -68,6 +67,7 @@ jobs:
         env:
           PGPASSWORD: secret
         # use the username and database name we set in the service above.
+        # A few sample SQL statements to show we really have access to Postgres
         run: |
           set -x # show the commands
           echo "SELECT CURRENT_TIME" | psql -h mypg -U myusername mydb
