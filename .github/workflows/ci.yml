@@ -69,7 +69,7 @@ jobs:
           echo "SELECT CURRENT_TIME" | psql -h mypg -U myusername mydb
           echo "SELECT version()" | psql -h mypg -U myusername mydb
           echo "CREATE TABLE counter (name text, cnt int)" | psql -h mypg -U myusername mydb
-          echo "INSERT INTO counter (name='foo', cnt=1)" | psql -h mypg -U myusername mydb
-          echo "INSERT INTO counter (name='bar', cnt=42)" | psql -h mypg -U myusername mydb
+          echo "INSERT INTO counter (name, cnt) VALUES ('foo', 1)" | psql -h mypg -U myusername mydb
+          echo 'INSERT INTO counter (name, cnt) VALUES ("bar", 42)' | psql -h mypg -U myusername mydb
           echo "SELECT * FROM counter" | psql -h mypg -U myusername mydb
 
