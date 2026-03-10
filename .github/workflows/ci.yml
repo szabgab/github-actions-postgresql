@@ -8,13 +8,6 @@ on:
 #  schedule:
 #    - cron: '42 5 * * *'
 
-env:
-  # We defined some environment variables needed by the the server
-  # They are also used in the client software
-  POSTGRES_USER: myusername
-  POSTGRES_PASSWORD: secret
-  POSTGRES_DB: mydb
-
 jobs:
   test:
     strategy:
@@ -31,7 +24,12 @@ jobs:
       # We'll use the same name later.
       mypg:
         image: postgres:${{matrix.postgres}}
-
+        env:
+          # We defined some environment variables needed by the the server
+          # They are also used in the client software
+          POSTGRES_USER: myusername
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: mydb
        # Some magic options needed for the Postgres in the Docker container
         options: >-
           --health-cmd pg_isready
