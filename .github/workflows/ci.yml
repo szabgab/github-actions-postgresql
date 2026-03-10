@@ -20,12 +20,14 @@ jobs:
     # The `services` will launch a separate docker container using the given image
     # That we take from the matrix
     services:
-      postgres:
+      # We can name our service anything we want. In this case we called it `mypg`.
+      # We'll use the same name later.
+      mypg:
         image: postgres:${{matrix.postgres}}
         env:
           # We defined some environment variables for the server
           # That are also used in the client software
-          POSTGRES_USER: username
+          POSTGRES_USER: myusername
           POSTGRES_PASSWORD: secret
           POSTGRES_DB: mydb
 
@@ -53,15 +55,18 @@ jobs:
           apt install -y postgresql-client
 
       - name: ping postgres
-        # The hostname of the postgres server is "postgres"
+        # The hostname of the postgres server is the name we gave to the service: "mypg"
         run: |
-          ping -c 4 postgres
+          ping -c 4 mypg
 
       - name: PostgreSQL CLI psql
+        # We set the same "secret" as we set in the service.
         env:
           PGPASSWORD: secret
+        # use the username and database name we set in the service above.
         run: |
           set -x
-          echo "SELECT CURRENT_TIME" | psql -h postgres -U username mydb
-          echo "SELECT version()" | psql -h postgres -U username mydb
+          echo "SELECT CURRENT_TIME" | psql -h mypy -U myusername mydb
+          echo "SELECT version()" | psql -h mypg -U myusername mydb
+          echo "CREATE TABLE counter (name text, cnt int DEFAULT)" | psql -h mypg -U myusername mydb
 
