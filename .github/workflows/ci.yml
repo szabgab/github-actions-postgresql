@@ -8,6 +8,13 @@ on:
 #  schedule:
 #    - cron: '42 5 * * *'
 
+env:
+  # We defined some environment variables needed by the the server
+  # They are also used in the client software
+  POSTGRES_USER: myusername
+  POSTGRES_PASSWORD: secret
+  POSTGRES_DB: mydb
+
 jobs:
   test:
     strategy:
@@ -24,12 +31,6 @@ jobs:
       # We'll use the same name later.
       mypg:
         image: postgres:${{matrix.postgres}}
-        env:
-          # We defined some environment variables for the server
-          # That are also used in the client software
-          POSTGRES_USER: myusername
-          POSTGRES_PASSWORD: secret
-          POSTGRES_DB: mydb
 
        # Some magic options needed for the Postgres in the Docker container
         options: >-
@@ -65,8 +66,8 @@ jobs:
           PGPASSWORD: secret
         # use the username and database name we set in the service above.
         run: |
-          set -x
-          echo "SELECT CURRENT_TIME" | psql -h mypg -U myusername mydb
+          set -xe
+          echo "SELECT CURRENT_TIME" | psql -h mypg -U myusername $POSTGRES_DB
           echo "SELECT version()" | psql -h mypg -U myusername mydb
           echo "CREATE TABLE counter (name text, cnt int)" | psql -h mypg -U myusername mydb
           echo "INSERT INTO counter (name, cnt) VALUES ('foo', 1)" | psql -h mypg -U myusername mydb
