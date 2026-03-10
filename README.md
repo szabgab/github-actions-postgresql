@@ -1,1 +1,4 @@
-Skeleton [GitHub Actions](https://code-maven.com/github-actions) using PosgreSQL service and connecting to it from container running Ubuntu using the postgresql client
+# GitHub Workflow with Postgres service
+
+For the full list of examples and explanations visit https://git.code-maven.com/
+
