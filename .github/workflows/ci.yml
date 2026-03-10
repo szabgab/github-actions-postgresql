@@ -68,5 +68,5 @@ jobs:
           set -x
           echo "SELECT CURRENT_TIME" | psql -h mypg -U myusername mydb
           echo "SELECT version()" | psql -h mypg -U myusername mydb
-          echo "CREATE TABLE counter (name text, cnt int DEFAULT)" | psql -h mypg -U myusername mydb
+          echo "CREATE TABLE counter (name text, cnt int)" | psql -h mypg -U myusername mydb
 
