@@ -15,7 +15,10 @@ jobs:
       # List some of the tags from https://hub.docker.com/_/postgres
       # You can be very specific or not so specific or just use the latest
       matrix:
-        postgres: ['16.13-trixie', '17', 'latest']
+        postgres:
+          - '16.13-trixie'
+          - '17'
+          - 'latest'
 
     # The `services` will launch a separate docker container using the given image
     # That we take from the matrix
